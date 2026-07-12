@@ -1,18 +1,31 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import tasksAPI from '@/shared/api/tasks';
+import { Todo } from '@/entities/todo';
 
-const TaskPage = (props) => {
+interface TaskPageProps {
+  params: {
+    id?: string | number;
+  };
+}
+
+const TaskPage: React.FC<TaskPageProps> = (props) => {
   const { params } = props;
   const taskId = params.id;
 
-  const [task, setTask] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
+  const [task, setTask] = useState<Todo | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [hasError, setHasError] = useState<boolean>(false);
 
   useEffect(() => {
+    if (taskId === undefined) {
+      setHasError(true);
+      setIsLoading(false);
+      return;
+    }
+
     tasksAPI
       .getById(taskId)
-      .then((taskData) => {
+      .then((taskData: Todo) => {
         if (taskData && taskData.id) {
           setTask(taskData);
           setHasError(false);
@@ -32,7 +45,7 @@ const TaskPage = (props) => {
     return <div>Загрузка...</div>;
   }
 
-  if (hasError) {
+  if (hasError || !task) {
     return <div>Задача не найдена</div>;
   }
 

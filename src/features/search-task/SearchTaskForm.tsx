@@ -1,15 +1,15 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import Field from '@/shared/ui/Field';
 import { TasksContext } from '@/entities/todo';
 import './SearchTaskForm.scss';
 
-const SearchTaskForm = () => {
-  const { searchQuery, setSearchQuery } = useContext(TasksContext);
+const SearchTaskForm: React.FC = () => {
+  const { searchQuery, setSearchQuery } = useContext(TasksContext)!;
 
   return (
     <form
       className="todo__form"
-      onSubmit={(event) => {
+      onSubmit={(event: React.SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
       }}
     >
@@ -19,7 +19,10 @@ const SearchTaskForm = () => {
         id="search-task"
         type="search"
         value={searchQuery}
-        onInput={({ target }) => setSearchQuery(target.value)}
+        onInput={(event: React.InputEvent<HTMLInputElement>) => {
+          const { currentTarget } = event;
+          setSearchQuery(currentTarget.value);
+        }}
       />
     </form>
   );

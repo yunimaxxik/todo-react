@@ -1,27 +1,26 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '@/shared/ui/Button';
 import Field from '@/shared/ui/Field';
 import { TasksContext } from '@/entities/todo';
 
-const AddTaskForm = () => {
-  const { addTask, newTaskInputRef } = useContext(TasksContext);
+const AddTaskForm: React.FC = () => {
+  const { addTask, newTaskInputRef } = useContext(TasksContext)!;
 
-  const [newTaskTitle, setNewTaskTitle] = useState('');
-
-  const [error, setError] = useState('');
+  const [newTaskTitle, setNewTaskTitle] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   const clearNewTaskTitle = newTaskTitle.trim();
   const isNewTaskTitleEmpty = clearNewTaskTitle.length === 0;
 
-  const onSubmit = (event) => {
+  const onSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!isNewTaskTitleEmpty) {
       addTask(clearNewTaskTitle, () => setNewTaskTitle(''));
     }
   };
 
-  const onInput = (event) => {
-    const { value } = event.target;
+  const onInput = (event: React.InputEvent<HTMLInputElement>) => {
+    const { value } = event.currentTarget;
     const clearValue = value.trim();
     const hasOnlySpaces = clearValue.length === 0 && value.length > 0;
 

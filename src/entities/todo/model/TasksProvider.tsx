@@ -1,10 +1,9 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import TasksContext from './TasksContext';
 import useTasks from './useTasks';
 import useIncompleteTaskScroll from './useIncompleteTaskScroll';
 
-const TasksProvider = (props) => {
-  const { children } = props;
+const TasksProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const {
     tasks,
     filteredTasks,

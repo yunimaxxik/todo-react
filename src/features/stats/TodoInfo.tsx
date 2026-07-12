@@ -1,14 +1,15 @@
-import { memo, useContext, useMemo } from 'react';
-import { TasksContext } from '@/entities/todo';
+import React, { memo, useContext, useMemo } from 'react';
+import { TasksContext, Todo } from '@/entities/todo';
 import './TodoInfo.scss';
 
-const TodoInfo = () => {
-  const { tasks, deleteAllTasks } = useContext(TasksContext);
+const TodoInfo: React.FC = () => {
+  const { tasks, deleteAllTasks } = useContext(TasksContext)!;
 
   const total = tasks.length;
   const hasTasks = total > 0;
+
   const done = useMemo(() => {
-    return tasks.filter(({ isDone }) => isDone).length;
+    return tasks.filter((task: Todo) => task.isDone).length;
   }, [tasks]);
 
   return (

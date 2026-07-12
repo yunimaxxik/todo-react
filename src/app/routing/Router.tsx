@@ -1,6 +1,11 @@
-import useRoute from './useRoute';
+import React from 'react';
+import useRoute from './useRoute.ts';
 
-const matchPath = (path, route) => {
+export type RouteParams = {
+  [key: string]: string | undefined; // Разрешает динамический id, userId и т.д.
+};
+
+const matchPath = (path: string, route: string): RouteParams | null => {
   const pathParts = path.split('/');
   const routeParts = route.split('/');
 
@@ -8,12 +13,11 @@ const matchPath = (path, route) => {
     return null;
   }
 
-  const params = {};
+  const params: RouteParams = {};
 
   for (let i = 0; i < routeParts.length; i++) {
     if (routeParts[i].startsWith(':')) {
       const paramName = routeParts[i].slice(1);
-
       params[paramName] = pathParts[i];
     } else if (routeParts[i] !== pathParts[i]) {
       return null;
@@ -23,7 +27,11 @@ const matchPath = (path, route) => {
   return params;
 };
 
-const Router = (props) => {
+interface RouterProps {
+  routes: Record<string, React.ComponentType<{ params: RouteParams }>>;
+}
+
+const Router: React.FC<RouterProps> = (props) => {
   const { routes } = props;
   const path = useRoute();
 
@@ -32,14 +40,15 @@ const Router = (props) => {
 
     if (params) {
       const Page = routes[route];
-
       return <Page params={params} />;
     }
   }
 
   const NotFound = routes['*'];
 
-  return <NotFound />;
+  if (!NotFound) return null;
+
+  return <NotFound params={{}} />;
 };
 
 export default Router;

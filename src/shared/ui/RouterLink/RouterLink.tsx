@@ -1,7 +1,14 @@
-const RouterLink = (props) => {
+import React from 'react';
+
+interface RouterLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  to: string;
+  children: React.ReactNode;
+}
+
+const RouterLink: React.FC<RouterLinkProps> = (props) => {
   const { to, children, ...rest } = props;
 
-  const handleClick = (event) => {
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     window.history.pushState({}, '', to);
     window.dispatchEvent(new PopStateEvent('popstate'));

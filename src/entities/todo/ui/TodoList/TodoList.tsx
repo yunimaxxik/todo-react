@@ -1,10 +1,9 @@
-import { memo, useContext } from 'react';
-import TodoItem from '../TodoItem';
-import { TasksContext } from '@/entities/todo';
+import React, { memo, useContext } from 'react';
+import { Todo, TodoItem, TasksContext } from '@/entities/todo';
 import './TodoList.scss';
 
-const TodoList = () => {
-  const { tasks = [], filteredTasks } = useContext(TasksContext);
+const TodoList: React.FC = () => {
+  const { tasks = [], filteredTasks } = useContext(TasksContext)!;
 
   const hasTasks = tasks.length > 0;
   const isEmptyFilteredTasks = filteredTasks?.length === 0;
@@ -19,7 +18,7 @@ const TodoList = () => {
 
   return (
     <ul className="todo__list">
-      {(filteredTasks ?? tasks).map((task) => (
+      {(filteredTasks ?? tasks).map((task: Todo) => (
         <TodoItem
           className="todo__item"
           key={task.id}

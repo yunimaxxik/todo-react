@@ -1,4 +1,4 @@
-const escapeHTML = (unsafeString) => {
+const escapeHTML = (unsafeString: string): string => {
   return unsafeString
     .replaceAll(/&/g, '&amp;')
     .replaceAll(/</g, '&lt;')
@@ -7,11 +7,14 @@ const escapeHTML = (unsafeString) => {
     .replaceAll(/'/g, '&#39;');
 };
 
-const escapeRegExp = (unsafeString) => {
+const escapeRegExp = (unsafeString: string): string => {
   return unsafeString.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
 
-export const highlightCaseInsensitive = (text, query) => {
+export const highlightCaseInsensitive = (
+  text: string,
+  query: string
+): string => {
   const safeText = escapeHTML(text);
   const queryFormatted = query.trim();
 

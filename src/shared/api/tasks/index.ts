@@ -4,16 +4,22 @@ const headers = {
   'Content-Type': 'application/json'
 };
 
+interface APITask {
+  id: string | number;
+  title: string;
+  isDone: boolean;
+}
+
 const tasksAPI = {
-  getAll: () => {
+  getAll: (): Promise<APITask[]> => {
     return fetch(URL).then((response) => response.json());
   },
 
-  getById: (id) => {
+  getById: (id: string | number): Promise<APITask> => {
     return fetch(`${URL}/${id}`).then((response) => response.json());
   },
 
-  add: (task) => {
+  add: (task: Omit<APITask, 'id'>): Promise<APITask> => {
     return fetch(URL, {
       method: 'POST',
       headers,
@@ -21,17 +27,17 @@ const tasksAPI = {
     }).then((response) => response.json());
   },
 
-  delete: (id) => {
+  delete: (id: string | number): Promise<Response> => {
     return fetch(`${URL}/${id}`, {
       method: 'delete'
     });
   },
 
-  deleteAll: (tasks) => {
+  deleteAll: (tasks: APITask[]): Promise<Response[]> => {
     return Promise.all(tasks.map(({ id }) => tasksAPI.delete(id)));
   },
 
-  toggleComplete: (id, isDone) => {
+  toggleComplete: (id: string | number, isDone: boolean): Promise<Response> => {
     return fetch(`${URL}/${id}`, {
       method: 'PATCH',
       headers,

@@ -1,10 +1,17 @@
-import { memo, useContext } from 'react';
+import React, { memo } from 'react';
 import { TasksContext } from '@/entities/todo';
 import RouterLink from '@/shared/ui/RouterLink';
 import { highlightCaseInsensitive } from '@/shared/utils/highlight';
 import './TodoItem.scss';
 
-const TodoItem = (props) => {
+interface TodoItemProps {
+  className?: string;
+  id: string | number;
+  title: string;
+  isDone: boolean;
+}
+
+const TodoItem: React.FC<TodoItemProps> = (props) => {
   const { className = '', id, title, isDone } = props;
 
   const {
@@ -15,7 +22,7 @@ const TodoItem = (props) => {
     disappearingTaskId,
     appearingTaskId,
     searchQuery
-  } = useContext(TasksContext);
+  } = React.useContext(TasksContext)!;
 
   const filteredTitle = highlightCaseInsensitive(title, searchQuery);
 
@@ -27,18 +34,23 @@ const TodoItem = (props) => {
         ${disappearingTaskId === id ? 'is-disappearing' : ''}
         ${appearingTaskId === id ? 'is-appearing' : ''}
         `}
-      ref={id === firstIncompleteTaskId ? firstIncompleteTaskRef : null}
+      // TypeScript теперь знает типы id и firstIncompleteTaskId и разрешит это сравнение
+      ref={
+        id === firstIncompleteTaskId
+          ? (firstIncompleteTaskRef as React.RefObject<HTMLLIElement | null>)
+          : null
+      }
     >
       <input
         className="todo-item__checkbox"
-        id={id}
+        id={String(id)} // Приводим к строке для HTML id属性
         type="checkbox"
         checked={isDone}
         onChange={({ target }) => toggleTaskComplete(id, target.checked)}
       />
       <label
         className="todo-item__label visually-hidden"
-        htmlFor={id}
+        htmlFor={String(id)}
       >
         {title}
       </label>
@@ -49,6 +61,7 @@ const TodoItem = (props) => {
       >
         <span dangerouslySetInnerHTML={{ __html: filteredTitle }}></span>
       </RouterLink>
+
       <button
         className="todo-item__delete-button"
         aria-label="Delete"

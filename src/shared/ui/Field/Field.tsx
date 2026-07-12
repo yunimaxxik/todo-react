@@ -1,6 +1,18 @@
+import React from 'react';
 import './Field.scss';
 
-const Field = (props) => {
+interface FieldProps {
+  className?: string;
+  id: string;
+  label: string;
+  type?: 'text' | 'search' | 'number' | 'password' | 'email';
+  value: string;
+  error?: string;
+  onInput: (event: React.InputEvent<HTMLInputElement>) => void;
+  ref?: React.RefObject<HTMLInputElement | null>;
+}
+
+const Field: React.FC<FieldProps> = (props) => {
   const {
     className = '',
     id,
