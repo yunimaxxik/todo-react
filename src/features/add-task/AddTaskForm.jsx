@@ -4,8 +4,9 @@ import Field from '@/shared/ui/Field';
 import { TasksContext } from '@/entities/todo';
 
 const AddTaskForm = () => {
-  const { addTask, newTaskTitle, setNewTaskTitle, newTaskInputRef } =
-    useContext(TasksContext);
+  const { addTask, newTaskInputRef } = useContext(TasksContext);
+
+  const [newTaskTitle, setNewTaskTitle] = useState('');
 
   const [error, setError] = useState('');
 
@@ -15,7 +16,7 @@ const AddTaskForm = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     if (!isNewTaskTitleEmpty) {
-      addTask(clearNewTaskTitle);
+      addTask(clearNewTaskTitle, () => setNewTaskTitle(''));
     }
   };
 
