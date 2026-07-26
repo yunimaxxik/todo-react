@@ -56,7 +56,7 @@ const TodoItem: React.FC<TodoItemProps> = (props) => {
       </label>
 
       <RouterLink
-        to={`/tasks/${id}`}
+        to={`tasks/${id}`}
         aria-label="Task detail page"
       >
         <span dangerouslySetInnerHTML={{ __html: filteredTitle }}></span>

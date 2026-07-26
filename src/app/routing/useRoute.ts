@@ -1,11 +1,20 @@
 import { useEffect, useState } from 'react';
+import { BASE_URL } from '@/shared/constants/index.ts';
+
+const getCurrentPath = () => {
+  const pathname = window.location.pathname;
+
+  return pathname.startsWith(BASE_URL)
+    ? pathname.slice(BASE_URL.length - 1) || '/'
+    : pathname;
+};
 
 const useRoute = () => {
-  const [path, setPath] = useState(window.location.pathname);
+  const [path, setPath] = useState(getCurrentPath());
 
   useEffect(() => {
     const onLocationChange = () => {
-      setPath(window.location.pathname);
+      setPath(getCurrentPath());
     };
 
     window.addEventListener('popstate', onLocationChange);
