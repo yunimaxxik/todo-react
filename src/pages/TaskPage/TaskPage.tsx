@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import tasksAPI from '@/shared/api/tasks';
-import { Todo } from '@/entities/todo';
+import { Task } from '@/entities/todo';
 
 interface TaskPageProps {
   params: {
@@ -12,7 +12,7 @@ const TaskPage: React.FC<TaskPageProps> = (props) => {
   const { params } = props;
   const taskId = params.id;
 
-  const [task, setTask] = useState<Todo | null>(null);
+  const [task, setTask] = useState<Task | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasError, setHasError] = useState<boolean>(false);
 
@@ -25,7 +25,7 @@ const TaskPage: React.FC<TaskPageProps> = (props) => {
 
     tasksAPI
       .getById(taskId)
-      .then((taskData: Todo) => {
+      .then((taskData: Task) => {
         if (taskData && taskData.id) {
           setTask(taskData);
           setHasError(false);

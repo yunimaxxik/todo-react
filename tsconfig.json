@@ -14,6 +14,9 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    /* Типы для Vite */
+    "types": ["vite/client"],
+
     /* Линтинг и строгость (рекомендуется) */
     "strict": true,
     "noUnusedLocals": true,
@@ -21,7 +24,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
 
-    /* Абсолютные импорты теперь работают напрямую через paths относительно корня */
+    /* Абсолютные импорты */
     "paths": {
       "@/*": ["./src/*"]
     }
