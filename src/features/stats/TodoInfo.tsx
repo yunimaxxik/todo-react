@@ -1,5 +1,6 @@
 import React, { memo, useContext, useMemo } from 'react';
-import { TasksContext, Todo } from '@/entities/todo';
+import { TasksContext } from '@/entities/todo';
+import { Task } from '@/shared/models/Task';
 import './TodoInfo.scss';
 
 const TodoInfo: React.FC = () => {
@@ -9,7 +10,7 @@ const TodoInfo: React.FC = () => {
   const hasTasks = total > 0;
 
   const done = useMemo(() => {
-    return tasks.filter((task: Todo) => task.isDone).length;
+    return tasks.filter((task: Task) => task.isDone).length;
   }, [tasks]);
 
   return (

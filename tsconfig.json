@@ -15,7 +15,7 @@
     "jsx": "react-jsx",
 
     /* Типы для Vite */
-    "types": ["vite/client"],
+    "types": ["vite/client", "node"],
 
     /* Линтинг и строгость (рекомендуется) */
     "strict": true,

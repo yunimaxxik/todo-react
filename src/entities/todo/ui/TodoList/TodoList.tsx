@@ -1,5 +1,6 @@
 import React, { memo, useContext } from 'react';
-import { Todo, TodoItem, TasksContext } from '@/entities/todo';
+import { TodoItem, TasksContext } from '@/entities/todo';
+import { Task } from '@/shared/models/Task';
 import './TodoList.scss';
 
 const TodoList: React.FC = () => {
@@ -18,7 +19,7 @@ const TodoList: React.FC = () => {
 
   return (
     <ul className="todo__list">
-      {(filteredTasks ?? tasks).map((task: Todo) => (
+      {(filteredTasks ?? tasks).map((task: Task) => (
         <TodoItem
           className="todo__item"
           key={task.id}

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import tasksAPI from '@/shared/api/tasks';
-import { Task } from '@/entities/todo';
+import { Task } from '@/shared/models/Task';
 
 interface TaskPageProps {
   params: {
-    id?: string | number;
+    id?: string;
   };
 }
 

@@ -6,7 +6,7 @@ import './TodoItem.scss';
 
 interface TodoItemProps {
   className?: string;
-  id: string | number;
+  id: string;
   title: string;
   isDone: boolean;
 }

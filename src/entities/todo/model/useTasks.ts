@@ -13,8 +13,8 @@ import { Task } from '@/shared/models/Task';
 type TasksAction =
   | { type: 'SET_ALL'; tasks: Task[] }
   | { type: 'ADD'; task: Task }
-  | { type: 'TOGGLE_COMPLETE'; id: string | number; isDone: boolean }
-  | { type: 'DELETE'; id: string | number }
+  | { type: 'TOGGLE_COMPLETE'; id: string; isDone: boolean }
+  | { type: 'DELETE'; id: string }
   | { type: 'DELETE_ALL' };
 
 // 2. Типизируем редьюсер: state — это массив Todo, action — наш союз типов TasksAction
@@ -49,12 +49,10 @@ const useTasks = () => {
   const [tasks, dispatch] = useReducer(tasksReducer, []);
 
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [disappearingTaskId, setDisappearingTaskId] = useState<
-    string | number | null
-  >(null);
-  const [appearingTaskId, setAppearingTaskId] = useState<
-    string | number | null
-  >(null);
+  const [disappearingTaskId, setDisappearingTaskId] = useState<string | null>(
+    null
+  );
+  const [appearingTaskId, setAppearingTaskId] = useState<string | null>(null);
 
   // Явно указываем, что реф привязан к HTML-инпуту
   const newTaskInputRef = useRef<HTMLInputElement>(null);
